@@ -11,12 +11,13 @@
 
 		<script>
 			async function compare() {
-				const botData = {}
 				const res = await fetch(location.origin + "/list.json")
 				const data = await res.json()
 				console.log(data)
 
-				[document.getElementById("bot1").value, document.getElementById("bot2").value].forEach(async (bot, i) => {
+				const botData = {}
+				const botIDs = [document.getElementById("bot1").value, document.getElementById("bot2").value]
+				botIDs.forEach(async (bot, i) => {
 					const botname = data.find(listbot => listbot.id == bot)?.name
 					if (!botname) return alert("Bot " + i + " (" + bot + ") not found in list")
 
