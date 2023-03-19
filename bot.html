@@ -15,40 +15,37 @@
 				const data = await res.json()
 				console.log(data)
 
-				const bot1 = document.getElementById("bot1").value
-				const botname1 = data.find(bot => bot.id == bot1)?.name.toLowerCase()
-				if (!botname1) return alert("Bot 1 not found in list")
+				const botData = {}
+				[document.getElementById("bot1").value, document.getElementById("bot2").value].forEach(async (bot, i) => {
+					const botname = data.find(listbot => listbot.id == bot)?.name
+					if (!botname) return alert("Bot " + i + " (" + bot + ") not found in list")
 
-				const bot2 = document.getElementById("bot2").value
-				const botname2 = data.find(bot => bot.id == bot2)?.name.toLowerCase()
-				if (!botname2) return alert("Bot 2 not found in list")
-
-				const botres1 = await fetch(location.origin + "/bots/" + botname1 + ".json")
-				const botdata1 = await botres1.json()
-				console.log(botdata1)
-
-				const botres2 = await fetch(location.origin + "/bots/" + botname2 + ".json")
-				const botdata2 = await botres2.json()
-				console.log(botdata2)
+					const botres = await fetch(location.origin + "/bots/" + botname.toLowerCase() + ".json")
+					const botdata = await botres.json()
+					console.log(botData)
+					botData[botname] = botdata
+				})
 
 				let html =
-					"<h2>Comparison of " + botdata1.name + " and " + botdata2.name + "</h2>" +
+					"<h2>Comparison of " + Object.keys(botData).join(", ") + "</h2>" +
 					"<table cellpadding='8' cellspacing='0'>" +
 					"<thead>" +
 					"<tr>" +
 					"<th>Feature</th>" +
-					"<th>" + botdata1.name + "</th>" +
-					"<th>" + botdata2.name + "</th>" +
+					Object.keys(botData).map(bot => "<th>" + bot + "</th>").join("") +
 					"</thead><tbody>" +
 					"</tr>"
 
-				const allFeatures = [...Object.keys(botdata1.features), ...Object.keys(botdata2.features)]
+				let allFeatures = []
+				Object.keys(botData).forEach(bot => {
+					allFeatures = [...allFeatures, ...Object.keys(botData[bot].features)]
+				})
+				allFeatures = [...new Set(allFeatures)]
 				allFeatures.forEach(feature => {
 					html +=
 						"<tr>" +
 						"<td>" + feature + "</td>" +
-						"<td>" + (Object.keys(botdata1.features).includes(feature) ? (botdata1.features[feature] && typeof botdata1.features[feature] == "boolean" ? "✅" : "🟨<ul><li>" + botdata1.features[feature].join("</li><li>") + "</li></ul>") : "❌") + "</td>" +
-						"<td>" + (Object.keys(botdata2.features).includes(feature) ? (botdata2.features[feature] && typeof botdata2.features[feature] == "boolean" ? "✅" : "🟨<ul><li>" + botdata2.features[feature].join("</li><li>") + "</li></ul>") : "❌") + "</td>" +
+						(Object.keys(botData).map(bot => "<td>" + (Object.keys(botData[bot].features).includes(feature) ? (botData[bot].features[feature] && typeof botData[bot].features[feature] == "boolean" ? "✅" : "🟨<ul><li>" + botData[bot].features[feature].join("</li><li>") + "</li></ul>") : "❌") + "</td>")).join("") +
 						"</tr>"
 				})
 
@@ -58,7 +55,7 @@
 	</head>
 	<body>
 		<h1>Compare multipurpose Discord bots</h1>
-		<h2>This site allows you to compare the features of a Discord bot, or add a bot to complete our list.</h2>
+		<h2>This site allows you to compare the features of a Discord bot.</h2>
 
 		<label for="bot1">Bot 1 ID</label>
 		<input id="bot1">
