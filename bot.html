@@ -16,16 +16,15 @@
 				console.log(data)
 
 				const botData = {}
-				const botIDs = [document.getElementById("bot1").value, document.getElementById("bot2").value]
-				botIDs.forEach(async (bot, i) => {
-					const botname = data.find(listbot => listbot.id == bot)?.name
-					if (!botname) return alert("Bot " + i + " (" + bot + ") not found in list")
+				for await (const element of document.getElementsByClassName("inputs")) {
+					const botname = data.find(listbot => listbot.id == element.value)?.name
+					if (!botname) return alert("Bot " + i + " (" + element.value + ") not found in list")
 
 					const botres = await fetch(location.origin + "/bots/" + botname.toLowerCase() + ".json")
-					const botdata = await botres.json()
-					console.log(botData)
-					botData[botname] = botdata
-				})
+					const json = await botres.json()
+					console.log(json)
+					botData[botname] = json
+				}
 
 				let html =
 					"<h2>Comparison of " + Object.keys(botData).join(", ") + "</h2>" +
@@ -56,18 +55,30 @@
 	</head>
 	<body>
 		<h1>Compare multipurpose Discord bots</h1>
-		<h2>This site allows you to compare the features of a Discord bot.</h2>
+		<h2>This site allows you to compare the features of Discord bots.</h2>
 
 		<label for="bot1">Bot 1 ID</label>
-		<input id="bot1">
+		<input id="bot1" class="inputs">
 
 		<br>
 		<label for="bot2">Bot 2 ID</label>
-		<input id="bot2">
+		<input id="bot2" class="inputs">
+
+		<br>
+		<label for="bot3">Bot 3 ID</label>
+		<input id="bot3" class="inputs">
 
 		<br>
 		<button type="button" onclick="compare()">Compare</button>
 
 		<div id="comparison"></div>
+
+		<script>
+			const params = new URLSearchParams(location.search)
+			if (params.has("bot1")) document.getElementById("bot1").value = params.get("bot1")
+			if (params.has("bot2")) document.getElementById("bot2").value = params.get("bot2")
+			if (params.has("bot3")) document.getElementById("bot3").value = params.get("bot3")
+			if (params.has("bot1") && params.has("bot2")) compare()
+		</script>
 	</body>
 </html>

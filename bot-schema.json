@@ -3,63 +3,55 @@
 	"type": "object",
 	"properties": {
 		"name": {
-			"type": "string"
+			"type": "string",
+			"description": "The bot's name",
+			"maxLength": 32
 		},
 		"id": {
-			"type": "string"
+			"type": "string",
+			"description": "The bot's ID",
+			"minLength": 17,
+			"maxLength": 20
 		},
 		"discrim": {
-			"type": "integer"
+			"type": "integer",
+			"description": "The bot's discriminator",
+			"minLength": 4,
+			"minimum": 0,
+			"maximum": 9999
 		},
 		"avatar": {
-			"type": "string"
+			"type": "string",
+			"description": "The bot's avatar hash"
+		},
+		"website": {
+			"type": "string",
+			"description": "The bot's website, or a bot list entry",
+			"format": "uri"
 		},
 		"premium": {
-			"type": "string"
+			"type": "string",
+			"description": "If and how much of the bot is locked behind a premium subscription",
+			"default": "none",
+			"enum": [
+				"none",
+				"most"
+			]
 		},
 		"features": {
 			"type": "object",
-			"properties": {
-				"slashcommands": {
-					"type": "boolean"
+			"description": "The bot's features",
+			"minItems": 1,
+			"definitions": {
+				"feature": {
+					"type": "boolean",
+					"description": "Whether the bot has this feature or not. Must not be present if not."
 				},
-				"tickets": {
-					"type": "boolean"
-				},
-				"welcome": {
-					"type": "boolean"
-				},
-				"moderation": {
+				"featureLimited": {
 					"type": "array",
-					"items": [
-						{
-							"type": "string"
-						}
-					]
-				},
-				"customcommands": {
-					"type": "boolean"
-				},
-				"reactionroles": {
-					"type": "boolean"
-				},
-				"buttonroles": {
-					"type": "boolean"
-				},
-				"selectroles": {
-					"type": "boolean"
+					"description": "The bot has this feature, but it is limited. Fill in why it is limited."
 				}
-			},
-			"required": [
-				"slashcommands",
-				"tickets",
-				"welcome",
-				"moderation",
-				"customcommands",
-				"reactionroles",
-				"buttonroles",
-				"selectroles"
-			]
+			}
 		}
 	},
 	"required": [
@@ -67,7 +59,7 @@
 		"id",
 		"discrim",
 		"avatar",
-		"premium",
+		"website",
 		"features"
 	]
 }

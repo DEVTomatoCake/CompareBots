@@ -17,9 +17,12 @@
 
 				let botshtml = ""
 				data.forEach(bot => {
-					botshtml += "<div class='bot'>" +
+					botshtml +=
+						"<div class='bot'>" +
+						"<a href='bot?bot1=" + bot.id + "'>" +
 						"<img src='https://cdn.discordapp.com/avatars/" + bot.id + "/" + bot.avatar + ".webp?size=128' alt='Avatar of " + bot.name + "'>" +
 						"<h3>" + bot.name + "</h3>" +
+						"</a>" +
 						"</div>"
 				})
 				document.getElementById("bots").innerHTML = botshtml
@@ -29,6 +32,11 @@
 	<body onload="load()">
 		<h1>Compare multipurpose Discord bots</h1>
 		<h2>This site allows you to compare the features of a Discord bot, or add a bot to complete our list.</h2>
+
+		<details>
+			<summary>How to add a bot</summary>
+			<p></p>
+		</details>
 
 		<h3>Listed bots:</h3>
 		<div id="bots"></div>
