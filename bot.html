@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="description" content="TomatenKuchen is a multipurpose Discord bot with many common and innovative features for your server. It features multiple languages, custom commands, reaction roles and much more.">
+		<meta name="description" content="Compare listed multipurpose Discord bots by their features. Compare bots here.">
 		<meta name="theme-color" content="#ed8721">
 
 		<link href="./style.css" rel="stylesheet" type="text/css">
@@ -34,10 +34,12 @@
 				let html =
 					"<h2>Comparison of " + botdata1.name + " and " + botdata2.name + "</h2>" +
 					"<table>" +
+					"<thead>" +
 					"<tr>" +
 					"<th>Feature</th>" +
 					"<th>" + botdata1.name + "</th>" +
 					"<th>" + botdata2.name + "</th>" +
+					"</thead><tbody>" +
 					"</tr>"
 
 				Object.keys(botdata1.features).forEach(feature => {
@@ -55,12 +57,12 @@
 					html +=
 						"<tr>" +
 						"<td>" + feature + "</td>" +
-						"<td>" + "❌" + "</td>" +
+						"<td>❌</td>" +
 						"<td>" + (botdata2.features[feature] && typeof botdata2.features[feature] == "boolean" ? "✅" : "🟨<ul><li>" + botdata2.features[feature].join("</li><li>") + "</li></ul>") + "</td>" +
 						"</tr>"
 				})
 
-				html += "</table>"
+				html += "</tbody></table>"
 
 				document.getElementById("comparison").innerHTML = html
 			}
@@ -73,9 +75,11 @@
 		<label for="bot1">Bot 1 ID</label>
 		<input id="bot1">
 
+		<br>
 		<label for="bot2">Bot 2 ID</label>
 		<input id="bot2">
 
+		<br>
 		<button type="button" onclick="compare()">Compare</button>
 
 		<div id="comparison"></div>

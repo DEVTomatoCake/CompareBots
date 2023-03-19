@@ -8,17 +8,6 @@ h1 {
 	font-size: 50px;
 }
 
-#bots {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-	grid-gap: 20px;
-}
-#bots div {
-	padding: 10px;
-	border-radius: 10px;
-	margin: 10px;
-}
-
 button {
 	background-color: #3e4dd1;
 	border: none;
@@ -32,9 +21,22 @@ button {
 button:hover {
 	background-color: #416bc5;
 }
-button:disabled {
-	background-color: #59609c;
-	cursor: not-allowed;
+
+input {
+	padding: 5px;
+	font-size: 18px;
+}
+
+#bots {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	grid-gap: 20px;
+}
+#bots div {
+	padding: 10px;
+	border-radius: 10px;
+	margin: 10px;
+	background-color: #DDD;
 }
 
 #bots img {
@@ -46,4 +48,11 @@ button:disabled {
 
 table th {
 	font-weight: 700;
+}
+
+tr {
+	background-color: #E5E7F1;
+}
+tr.cmdvisible:nth-child(odd) {
+	background-color: #C1C4D8;
 }
