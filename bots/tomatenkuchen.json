@@ -1,4 +1,5 @@
 {
+	"$schema": "../bot-schema.json",
 	"name": "TomatenKuchen",
 	"id": "685166801394335819",
 	"discrim": 8376,

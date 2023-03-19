@@ -1,0 +1,73 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"type": "object",
+	"properties": {
+		"name": {
+			"type": "string"
+		},
+		"id": {
+			"type": "string"
+		},
+		"discrim": {
+			"type": "integer"
+		},
+		"avatar": {
+			"type": "string"
+		},
+		"premium": {
+			"type": "string"
+		},
+		"features": {
+			"type": "object",
+			"properties": {
+				"slashcommands": {
+					"type": "boolean"
+				},
+				"tickets": {
+					"type": "boolean"
+				},
+				"welcome": {
+					"type": "boolean"
+				},
+				"moderation": {
+					"type": "array",
+					"items": [
+						{
+							"type": "string"
+						}
+					]
+				},
+				"customcommands": {
+					"type": "boolean"
+				},
+				"reactionroles": {
+					"type": "boolean"
+				},
+				"buttonroles": {
+					"type": "boolean"
+				},
+				"selectroles": {
+					"type": "boolean"
+				}
+			},
+			"required": [
+				"slashcommands",
+				"tickets",
+				"welcome",
+				"moderation",
+				"customcommands",
+				"reactionroles",
+				"buttonroles",
+				"selectroles"
+			]
+		}
+	},
+	"required": [
+		"name",
+		"id",
+		"discrim",
+		"avatar",
+		"premium",
+		"features"
+	]
+}
