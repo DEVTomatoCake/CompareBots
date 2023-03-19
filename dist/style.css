@@ -1,0 +1,19 @@
+* {
+	margin: 0;
+}
+
+html, body {
+	font-size: 20px;
+	font-family: sans-serif;
+}
+
+#bots {
+	display: flex;
+	flex-wrap: wrap;
+}
+#bots img {
+	border-radius: 50%;
+}
+#bots h3 {
+	text-align: center;
+}

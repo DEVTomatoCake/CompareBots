@@ -1,0 +1,20 @@
+{
+  "name": "comparebots",
+  "version": "1.0.0",
+  "description": "A 100% needed project to compare the features of multipurpose Discord bots",
+  "main": "build.js",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DEVTomatoCake/CompareBots.git"
+  },
+  "keywords": ["discord", "discordbot", "compare"],
+  "author": "TomatoCake",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DEVTomatoCake/CompareBots/issues"
+  },
+  "homepage": "https://github.com/DEVTomatoCake/CompareBots#readme"
+}
