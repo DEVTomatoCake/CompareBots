@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="TomatenKuchen is a multipurpose Discord bot with many common and innovative features for your server. It features multiple languages, custom commands, reaction roles and much more.">
+		<meta name="theme-color" content="#ed8721">
+
+		<link href="./style.css" rel="stylesheet" type="text/css">
+		<title>Compare Discord bots</title>
+
+		<script>
+			async function compare() {
+				const res = await fetch(location.origin + "/list.json")
+				const data = await res.json()
+				console.log(data)
+
+				const bot1 = document.getElementById("bot1").value
+				const botname1 = data.find(bot => bot.id == bot1)?.name.toLowerCase()
+				if (!botname1) return alert("Bot 1 not found in list")
+
+				const bot2 = document.getElementById("bot2").value
+				const botname2 = data.find(bot => bot.id == bot2)?.name.toLowerCase()
+				if (!botname2) return alert("Bot 2 not found in list")
+
+				const botres1 = await fetch(location.origin + "/bots/" + botname1 + ".json")
+				const botdata1 = await botres1.json()
+				console.log(botdata1)
+
+				const botres2 = await fetch(location.origin + "/bots/" + botname2 + ".json")
+				const botdata2 = await botres2.json()
+				console.log(botdata2)
+
+				let html =
+					"<h2>Comparison of " + botdata1.name + " and " + botdata2.name + "</h2>" +
+					"<table>" +
+					"<tr>" +
+					"<th>Feature</th>" +
+					"<th>" + botdata1.name + "</th>" +
+					"<th>" + botdata2.name + "</th>" +
+					"</tr>"
+
+				for (const feature of botdata1.features) {
+					html +=
+						"<tr>" +
+						"<td>" + feature + "</td>" +
+						"<td>✅</td>" +
+						"<td>" + (botdata2.features.includes(feature) ? "✅" : "❌") + "</td>" +
+						"</tr>"
+				}
+
+				for (const feature of botdata2.features) {
+					if (botdata1.features.includes(feature)) continue
+					html +=
+						"<tr>" +
+						"<td>" + feature + "</td>" +
+						"<td>❌</td>" +
+						"<td>✅</td>" +
+						"</tr>"
+				}
+				html += "</table>"
+
+				document.getElementById("comparison").innerHTML = html
+			}
+		</script>
+	</head>
+	<body>
+		<h1>Compare multipurpose Discord bots</h1>
+		<h2>This site allows you to compare the features of a Discord bot, or add a bot to complete our list.</h2>
+
+		<label for="bot1">Bot 1 ID</label>
+		<input id="bot1">
+
+		<label for="bot2">Bot 2 ID</label>
+		<input id="bot2">
+
+		<button type="button" onclick="compare()">Compare</button>
+
+		<div id="comparison"></div>
+	</body>
+</html>

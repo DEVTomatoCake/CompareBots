@@ -8,26 +8,29 @@
 
 		<link href="./style.css" rel="stylesheet" type="text/css">
 		<title>Compare Discord bots</title>
+
+		<script>
+			async function load() {
+				const res = await fetch(location.origin + "/list.json")
+				const data = await res.json()
+				console.log(data)
+
+				let botshtml = ""
+				data.forEach(bot => {
+					botshtml += "<div class='bot'>"
+						"<img src='https://cdn.discordapp.com/avatars/" + bot.id + "/" + bot.avatar + ".webp?size=128' alt='Avatar of " + bot.name + "'>"
+						"<h3>" + bot.name + "</h3>" +
+						"</div>"
+				})
+				document.getElementById("bots").innerHTML = botshtml
+			}
+		</script>
 	</head>
-	<body>
+	<body onload="load()">
 		<h1>Compare multipurpose Discord bots</h1>
 		<h2>This site allows you to compare the features of a Discord bot, or add a bot to complete our list.</h2>
 
+		<h3>Listed bots:</h3>
 		<div id="bots"></div>
-
-		<script>
-			const res = await fetch(location.origin + "/list.json")
-			const data = await res.json()
-			console.log(data)
-
-			let botshtml = ""
-			data.forEach(bot => {
-				botshtml += "<div class='bot'>"
-					"<img src='https://cdn.discordapp.com/avatars/" + bot.id + "/" + bot.avatar + ".webp?size=128' alt='Avatar of " + bot.name + "'>"
-					"<h3>" + bot.name + "</h3>" +
-					"</div>"
-			})
-			document.getElementById("bots").innerHTML = botshtml
-		</script>
 	</body>
 </html>
