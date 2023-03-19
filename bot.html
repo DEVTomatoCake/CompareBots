@@ -40,24 +40,26 @@
 					"<th>" + botdata2.name + "</th>" +
 					"</tr>"
 
-				for (const feature of botdata1.features) {
+				Object.keys(botdata1.features).forEach(feature => {
 					html +=
 						"<tr>" +
 						"<td>" + feature + "</td>" +
-						"<td>✅</td>" +
-						"<td>" + (botdata2.features.includes(feature) ? "✅" : "❌") + "</td>" +
+						"<td>" + (botdata1.features[feature] && typeof botdata1.features[feature] == "boolean" ? "✅" : "🟨<ul><li>" + botdata1.features[feature].join("</li><li>") + "</li></ul>") + "</td>" +
+						"<td>" + (Object.keys(botdata2.features).includes(feature) ? "✅" : "❌") + "</td>" +
 						"</tr>"
-				}
+				})
 
-				for (const feature of botdata2.features) {
-					if (botdata1.features.includes(feature)) continue
+				Object.keys(botdata2.features).forEach(feature => {
+					if (Object.keys(botdata1.features).includes(feature)) return
+
 					html +=
 						"<tr>" +
 						"<td>" + feature + "</td>" +
-						"<td>❌</td>" +
-						"<td>✅</td>" +
+						"<td>" + "❌" + "</td>" +
+						"<td>" + (botdata2.features[feature] && typeof botdata2.features[feature] == "boolean" ? "✅" : "🟨<ul><li>" + botdata2.features[feature].join("</li><li>") + "</li></ul>") + "</td>" +
 						"</tr>"
-				}
+				})
+
 				html += "</table>"
 
 				document.getElementById("comparison").innerHTML = html
