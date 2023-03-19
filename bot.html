@@ -33,7 +33,7 @@
 
 				let html =
 					"<h2>Comparison of " + botdata1.name + " and " + botdata2.name + "</h2>" +
-					"<table>" +
+					"<table cellpadding='8' cellspacing='0'>" +
 					"<thead>" +
 					"<tr>" +
 					"<th>Feature</th>" +
@@ -42,29 +42,17 @@
 					"</thead><tbody>" +
 					"</tr>"
 
-				Object.keys(botdata1.features).forEach(feature => {
+				const allFeatures = [...Object.keys(botdata1.features), ...Object.keys(botdata2.features)]
+				allFeatures.forEach(feature => {
 					html +=
 						"<tr>" +
 						"<td>" + feature + "</td>" +
-						"<td>" + (botdata1.features[feature] && typeof botdata1.features[feature] == "boolean" ? "✅" : "🟨<ul><li>" + botdata1.features[feature].join("</li><li>") + "</li></ul>") + "</td>" +
-						"<td>" + (Object.keys(botdata2.features).includes(feature) ? "✅" : "❌") + "</td>" +
+						"<td>" + (Object.keys(botdata1.features).includes(feature) ? (botdata1.features[feature] && typeof botdata1.features[feature] == "boolean" ? "✅" : "🟨<ul><li>" + botdata1.features[feature].join("</li><li>") + "</li></ul>") : "❌") + "</td>" +
+						"<td>" + (Object.keys(botdata2.features).includes(feature) ? (botdata2.features[feature] && typeof botdata2.features[feature] == "boolean" ? "✅" : "🟨<ul><li>" + botdata2.features[feature].join("</li><li>") + "</li></ul>") : "❌") + "</td>" +
 						"</tr>"
 				})
 
-				Object.keys(botdata2.features).forEach(feature => {
-					if (Object.keys(botdata1.features).includes(feature)) return
-
-					html +=
-						"<tr>" +
-						"<td>" + feature + "</td>" +
-						"<td>❌</td>" +
-						"<td>" + (botdata2.features[feature] && typeof botdata2.features[feature] == "boolean" ? "✅" : "🟨<ul><li>" + botdata2.features[feature].join("</li><li>") + "</li></ul>") + "</td>" +
-						"</tr>"
-				})
-
-				html += "</tbody></table>"
-
-				document.getElementById("comparison").innerHTML = html
+				document.getElementById("comparison").innerHTML = html + "</tbody></table>"
 			}
 		</script>
 	</head>
