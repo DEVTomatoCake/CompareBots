@@ -17,6 +17,7 @@
 
 				const botData = {}
 				for await (const element of document.getElementsByClassName("inputs")) {
+					if (!element.value) continue
 					const botname = data.find(listbot => listbot.id == element.value)?.name
 					if (!botname) return alert("Bot " + element.value + " not found in list")
 
